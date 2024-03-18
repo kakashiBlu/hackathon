@@ -1,7 +1,13 @@
 const config = {
-  plugins: {
-    tailwindcss: {},
-  },
+  "plugins": [
+		[
+			"postcss-nesting",
+			{
+        tailwindcss: {},
+				// Optionally add plugin options
+			}
+    ]]
+  
 };
 
 module.exports = config;

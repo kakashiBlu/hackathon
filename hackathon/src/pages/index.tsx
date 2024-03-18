@@ -1,8 +1,13 @@
+'use client';
 import Head from "next/head";
 import Link from "next/link";
-import { AppShell, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-export default function Home() { const [opened, { toggle }] = useDisclosure();
+import { useSession, signIn, signOut } from "next-auth/react";
+import { CollapseDesktop } from "@/components/desktop/CollapseDesktop";
+import { MobileNavbar } from "@/components/desktop/MobileNavbar";
+export default function Home() { 
+  const [opened, { toggle }] = useDisclosure();
+  const { data: session } = useSession()
   return (
     <>
       <Head>
@@ -11,30 +16,10 @@ export default function Home() { const [opened, { toggle }] = useDisclosure();
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main >
-      <AppShell
-      header={{ height: 60 }}
-      navbar={{
-        width: 300,
-        breakpoint: 'sm',
-        collapsed: { mobile: !opened },
-      }}
-      padding="md"
-    >
-      <AppShell.Header>
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          hiddenFrom="sm"
-          size="sm"
-        />
-        <div>Logo</div>
-      </AppShell.Header>
-
-      <AppShell.Navbar p="md"></AppShell.Navbar>
-
-      <AppShell.Main>Main</AppShell.Main>
-    </AppShell>
+      <>
+        {session? <CollapseDesktop/>:<MobileNavbar/>}
+      </>
       </main>
-    </>
+      </>
   );
 }
